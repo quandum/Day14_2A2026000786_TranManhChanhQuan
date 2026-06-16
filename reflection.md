@@ -240,18 +240,34 @@ Theo bài giảng: Evaluate → Analyze → Improve → Augment (add to benchmar
 
 **Framework bạn đã dùng trong lab:** RAGAS-inspired heuristic (word-overlap)
 
+**Real benchmark đã chạy với GOOGLE_API_KEY (Gemini 2.5 Flash):**
+
+| Metric | RAGAS Heuristic | LLM-as-Judge (Gemini 2.5 Flash) | TruLens-style |
+|--------|----------------|----------------------------------|---------------|
+| Avg Faithfulness | 0.0753 | 0.0100 | 0.0753 |
+| Avg Relevance | 0.7186 | 0.0050 | 0.7186 |
+| Avg Completeness | 0.1557 | 0.0000 | N/A |
+
+**Key Insight từ real benchmark:**
+- **Heuristic over-estimate relevance**: word-overlap cho relevance 0.72 vì mock agent chứa từ khóa từ question, nhưng Gemini đánh giá answer không thực sự trả lời câu hỏi → gần 0.
+- **LLM judge strict hơn đáng kể**: faithfulness=0.01 vs 0.075. Gemini hiểu rõ rằng answer generic không grounded trong context.
+- **Cả 2 đều detect hallucination** nhưng với mức độ nghiêm trọng khác nhau.
+
 **Nếu dùng trong production, bạn sẽ chọn framework nào? Tại sao?**
 
 | Tiêu chí | Lý do chọn |
 |----------|------------|
-| Focus phù hợp vì... | RAGAS có metrics chuyên biệt cho RAG pipeline (context recall/precision, faithfulness, relevance) — phù hợp nhất với use case của chúng tôi |
-| CI/CD integration vì... | DeepEval có native pytest integration (`deepeval test run`), dễ tích hợp vào GitHub Actions. RAGAS cần custom script. |
-| Team workflow vì... | DeepEval support cả offline eval (CI/CD gate) lẫn online monitoring (Langfuse integration), giảm tool chain complexity |
+| Focus phù hợp vì... | RAGAS có metrics chuyên biệt cho RAG pipeline — phù hợp nhất với use case của chúng tôi. Tuy nhiên, từ benchmark thực tế, heuristic word-overlap không đủ tin cậy cho production. |
+| CI/CD integration vì... | Có 2 options: (1) GitHub Actions + benchmark.py (đã tạo sẵn) cho heuristic evaluation nhanh; (2) Custom script + Gemini API cho LLM-based evaluation. |
+| Team workflow vì... | Quy trình khuyến nghị: **Staging dùng heuristic** (5 giây, fast iteration) → **Production gate dùng Gemini LLM judge** (5 phút, accurate) — kết hợp cả tốc độ lẫn độ chính xác. |
 
-**Kết luận:** Chọn **DeepEval** làm primary framework cho production vì:
-1. Native CI/CD integration (pytest-native)
-2. LLM-based metrics accurate hơn heuristic
-3. Safety metrics (toxicity, bias) built-in
-4. Có thể dùng local LLM (vLLM, Ollama) để giảm cost
+**Kết luận:** Chọn **hybrid approach**:
+1. **Fast gate (staging/CI):** Heuristic evaluation từ benchmark.py — chạy 5 giây, phát hiện regression nhanh
+2. **Quality gate (pre-deploy):** LLM-as-Judge với Gemini 2.5 Flash — đánh giá semantic, strict hơn, cho kết quả đáng tin cậy hơn
+3. **Monitoring (production):** TruLens-style feedback functions để monitor real-time quality drift
 
-Tuy nhiên vẫn giữ RAGAS heuristic trong staging để fast iteration (chạy trong 5 giây thay vì 5 phút).
+Pipeline khuyến nghị:
+```
+Code change → [pytest 39 tests] → [Heuristic benchmark < 5s] → [LLM Judge ~5 min] → Deploy
+               (unit tests)        (fast regression check)    (quality gate)       (production)
+```
