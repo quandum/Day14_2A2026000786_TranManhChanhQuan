@@ -1,6 +1,9 @@
 # Day 14 — Exercises
 ## AI Evaluation & Benchmarking | Lab Worksheet
 
+**Họ và tên:** Trần Mạnh Chánh Quân
+**Mã học viên:** 2A202600786
+
 **Lab Duration:** 3 hours
 
 ---

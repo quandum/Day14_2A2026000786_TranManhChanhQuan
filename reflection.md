@@ -1,6 +1,9 @@
 # Day 14 — Reflection
 ## Evaluation Report & Failure Analysis
 
+**Họ và tên:** Trần Mạnh Chánh Quân
+**Mã học viên:** 2A202600786
+
 ---
 
 ## 1. Benchmark Results Summary
