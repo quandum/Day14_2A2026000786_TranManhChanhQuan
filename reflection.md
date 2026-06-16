@@ -10,9 +10,26 @@
 
 Benchmark chạy trên 20 QA pairs (5 Easy + 7 Medium + 5 Hard + 3 Adversarial) với mock agent.
 
-**Overall pass rate:** 0.0% (0/20 pairs passed)
+**Overall pass rate (heuristic):** 0.0% (0/20 pairs passed)
 
-**Average scores:**
+### 📊 Multi-Framework Comparison (v2 — real RAGAS + TruLens + LLM-as-Judge via Gemini 2.5 Flash)
+
+| Framework | Faithfulness | Relevance | Completeness | Pass Rate |
+|-----------|:-----------:|:---------:|:-----------:|:---------:|
+| **RAGAS Heuristic** (word-overlap) | **0.0753** | **0.7186** | **0.1557** | **0.0%** |
+| **RAGAS-style** (Gemini-based) | **0.1025** | **0.0300** | — | — |
+| **TruLens-style** (Gemini-based) | **0.1000** | **0.0375** | **0.0075** | — |
+| **LLM-as-Judge** (Gemini 2.5 Flash) | **0.0250** | **0.0250** | **0.0250** | — |
+
+**RAGAS-style metrics (Gemini):**
+| Metric | Score |
+|--------|:----:|
+| Faithfulness | 0.1025 |
+| Answer Relevancy | 0.0300 |
+| Context Recall | **0.7025** |
+| Context Precision | **0.7400** |
+
+**Heuristic average scores (chi tiết):**
 
 | Metric | Average | Min | Max | Std Dev |
 |--------|---------|-----|-----|---------|
@@ -22,11 +39,11 @@ Benchmark chạy trên 20 QA pairs (5 Easy + 7 Medium + 5 Hard + 3 Adversarial) 
 | Overall Score | 0.3634 | 0.2340 | 0.6000 | 0.0927 |
 
 **Score interpretation (theo bài giảng):**
-- Bao nhiêu metrics ở Good (0.8–1.0)? 0 metrics ở Good range — faithfulness và completeness đều rất thấp, relevance cao (avg 0.83) nhưng không đủ
-- Bao nhiêu metrics ở Needs Work (0.6–0.8)? Relevance (0.831 — borderline Good/Needs Work)
-- Bao nhiêu metrics ở Significant Issues (<0.6)? Faithfulness (0.089), Completeness (0.170), Overall Score (0.363)
+- Bao nhiêu metrics ở Good (0.8–1.0)? 0 metrics ở Good range — faithfulness và completeness đều rất thấp
+- Bao nhiêu metrics ở Needs Work (0.6–0.8)? Relevance (0.831 heuristic), Context Recall (0.703), Context Precision (0.740)
+- Bao nhiêu metrics ở Significant Issues (<0.6)? Faithfulness (0.075–0.103), Completeness (0.170 heuristic / 0.008 Gemini), Relevance Gemini (0.025–0.038)
 
-**Failure type distribution:**
+**Failure type distribution (heuristic):**
 
 | Failure Type | Count | Percentage |
 |--------------|-------|------------|
@@ -36,7 +53,14 @@ Benchmark chạy trên 20 QA pairs (5 Easy + 7 Medium + 5 Hard + 3 Adversarial) 
 | off_topic | 0 | 0% |
 | refusal | 0 | 0% |
 
-**Nhận xét:** Do mock agent trả về generic template "Based on my knowledge: ... The answer involves key AI concepts like machine learning and deep learning" cho mọi câu hỏi, nên faithfulness rất thấp (answer không grounded trong context) và completeness thấp (không cover expected answer). Relevance vẫn cao vì rephrase của câu hỏi overlap với các từ trong question. 100% failures thuộc type hallucination.
+### 🔍 Key Insights from Real Frameworks
+
+1. **Word-overlap over-estimates relevance**: Heuristic cho relevance 0.72 vì mock agent lặp lại từ khóa trong question, nhưng Gemini đánh giá đúng rằng câu trả lời không thực sự trả lời câu hỏi → chỉ 0.025–0.038
+2. **Context Recall/Precision ở mức OK (~70%)**: Chứng tỏ golden dataset có chất lượng tốt, retrieval coverage đầy đủ
+3. **Faithfulness vẫn rất thấp dù dùng Gemini**: Mock agent không grounded trong context → cả heuristic và LLM judge đều detect hallucination
+4. **LLM judge strict hơn heuristic**: LLM-as-Judge cho scores ~0.025 trong khi heuristic cho ~0.075–0.719
+
+**Nhận xét:** Do mock agent trả về generic template "Based on my knowledge: ... The answer involves key AI concepts like machine learning and deep learning" cho mọi câu hỏi, nên faithfulness rất thấp (answer không grounded trong context) và completeness thấp (không cover expected answer). Khi dùng real LLM-based frameworks (RAGAS-style, TruLens-style, LLM-as-Judge), các điểm số còn thấp hơn vì Gemini hiểu semantic một cách chính xác. 100% failures thuộc type hallucination.
 
 ---
 
@@ -242,16 +266,20 @@ Theo bài giảng: Evaluate → Analyze → Improve → Augment (add to benchmar
 
 **Real benchmark đã chạy với GOOGLE_API_KEY (Gemini 2.5 Flash):**
 
-| Metric | RAGAS Heuristic | LLM-as-Judge (Gemini 2.5 Flash) | TruLens-style |
-|--------|----------------|----------------------------------|---------------|
-| Avg Faithfulness | 0.0753 | 0.0100 | 0.0753 |
-| Avg Relevance | 0.7186 | 0.0050 | 0.7186 |
-| Avg Completeness | 0.1557 | 0.0000 | N/A |
+| Metric | RAGAS Heuristic | RAGAS-style (Gemini) | TruLens-style (Gemini) | LLM-as-Judge (Gemini 2.5 Flash) |
+|--------|:---------------:|:-------------------:|:---------------------:|:-----------------------------:|
+| Avg Faithfulness | **0.0753** | **0.1025** | **0.1000** | **0.0250** |
+| Avg Relevance | **0.7186** | **0.0300** | **0.0375** | **0.0250** |
+| Avg Completeness | **0.1557** | — | **0.0075** | **0.0250** |
+| Context Recall | — | **0.7025** | — | — |
+| Context Precision | — | **0.7400** | — | — |
 
-**Key Insight từ real benchmark:**
-- **Heuristic over-estimate relevance**: word-overlap cho relevance 0.72 vì mock agent chứa từ khóa từ question, nhưng Gemini đánh giá answer không thực sự trả lời câu hỏi → gần 0.
-- **LLM judge strict hơn đáng kể**: faithfulness=0.01 vs 0.075. Gemini hiểu rõ rằng answer generic không grounded trong context.
-- **Cả 2 đều detect hallucination** nhưng với mức độ nghiêm trọng khác nhau.
+**Key Insight từ real benchmark (v2 — Gemini-only):**
+- **Word-overlap over-estimates relevance đáng kể**: heuristic cho relevance 0.72 vì mock agent chứa từ khóa từ question, nhưng Gemini đánh giá đúng → chỉ 0.025–0.038
+- **LLM judge strict hơn nhiều**: faithfulness heuristic=0.075 vs LLM judge=0.025. Gemini hiểu rõ answer generic không grounded trong context.
+- **Context Recall/Precision ~70%** ở RAGAS-style — chứng tỏ golden dataset quality tốt, retrieval coverage OK
+- **TruLens-style cho completeness gần 0** — mock agent hoàn toàn không cover expected answer
+- **Cả 4 framework đều detect hallucination** nhưng với mức độ nghiêm trọng khác nhau
 
 **Nếu dùng trong production, bạn sẽ chọn framework nào? Tại sao?**
 

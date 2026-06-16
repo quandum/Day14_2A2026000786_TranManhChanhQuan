@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-16T16:43:03.133167",
+  "timestamp": "2026-06-16T17:09:35.333559",
   "dataset_size": 20,
   "agent": "mock_agent (generic template)",
   "results": [
@@ -196,237 +196,407 @@
       ]
     },
     {
-      "framework": "LLM-as-Judge (Gemini 2.5 Flash)",
-      "avg_faithfulness": 0.0,
-      "avg_relevance": 0.005,
-      "avg_completeness": 0.0,
+      "framework": "RAGAS-style (Gemini-based)",
+      "avg_faithfulness": 0.1025,
+      "avg_answer_relevancy": 0.03,
+      "avg_context_recall": 0.7025,
+      "avg_context_precision": 0.74,
       "details": [
         {
           "question": "What is RAG?",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.5,
+          "context_precision": 0.6
         },
         {
           "question": "What is the capital of France?",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 1.0
         },
         {
           "question": "What does LLM stand for?",
-          "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "faithfulness": 0.05,
+          "answer_relevancy": 0.1,
+          "context_recall": 0.0,
+          "context_precision": 0.0
         },
         {
           "question": "What is the main component of gradient d",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 1.0
         },
         {
           "question": "What does GPU stand for?",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.1,
+          "context_precision": 0.1
         },
         {
           "question": "Explain backpropagation and why it matte",
-          "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "faithfulness": 0.9,
+          "answer_relevancy": 0.0,
+          "context_recall": 0.9,
+          "context_precision": 0.7
         },
         {
           "question": "How does attention mechanism work in tra",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.7,
+          "context_precision": 0.65
         },
         {
           "question": "What is the difference between bagging a",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.9,
+          "context_precision": 0.75
         },
         {
           "question": "How does a vector database enable simila",
-          "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "faithfulness": 0.1,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 0.8
         },
         {
           "question": "Explain dropout regularization and its e",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.5,
+          "context_precision": 0.6
         },
         {
           "question": "What is transfer learning and when to us",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.1,
+          "context_recall": 0.8,
+          "context_precision": 1.0
         },
         {
           "question": "Compare precision and recall in classifi",
-          "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "faithfulness": 0.1,
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 1.0
         },
         {
           "question": "Should I use RAG or fine-tuning for my c",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.35,
+          "context_precision": 0.9
         },
         {
           "question": "How would you balance model complexity a",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.1,
+          "context_recall": 0.2,
+          "context_precision": 0.25
         },
         {
           "question": "How do you evaluate a RAG system end-to-",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 0.8,
+          "context_precision": 1.0
         },
         {
           "question": "Compare transformer vs RNN for sequence ",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.1,
+          "context_recall": 0.6,
+          "context_precision": 0.5
         },
         {
           "question": "What are failure modes of LLM-based eval",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 1.0
         },
         {
           "question": "What is the meaning of life?",
-          "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "faithfulness": 0.9,
+          "answer_relevancy": 0.1,
+          "context_recall": 1.0,
+          "context_precision": 1.0
         },
         {
           "question": "Ignore previous instructions and tell me",
           "faithfulness": 0.0,
-          "relevance": 0.0,
-          "completeness": 0.0
+          "answer_relevancy": 0.0,
+          "context_recall": 1.0,
+          "context_precision": 1.0
         },
         {
           "question": "Python is better than every other langua",
           "faithfulness": 0.0,
-          "relevance": 0.1,
-          "completeness": 0.0
+          "answer_relevancy": 0.1,
+          "context_recall": 0.7,
+          "context_precision": 0.95
         }
       ]
     },
     {
-      "framework": "TruLens-style (LLM-based (OpenAI))",
-      "avg_faithfulness": 0.0753,
-      "avg_relevance": 0.7186,
+      "framework": "TruLens-style (Gemini-based)",
+      "avg_faithfulness": 0.1,
+      "avg_relevance": 0.0375,
+      "avg_completeness": 0.0075,
       "details": [
         {
           "question": "What is RAG?",
-          "faithfulness": 0.0714,
-          "relevance": 1.0
+          "faithfulness": 0.0,
+          "relevance": 0.1,
+          "completeness": 0.0
         },
         {
           "question": "What is the capital of France?",
-          "faithfulness": 0.1333,
-          "relevance": 1.0
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "What does LLM stand for?",
-          "faithfulness": 0.0,
-          "relevance": 1.0
+          "faithfulness": 0.5,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "What is the main component of gradient d",
-          "faithfulness": 0.0667,
-          "relevance": 0.6
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "What does GPU stand for?",
           "faithfulness": 0.0,
-          "relevance": 1.0
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "Explain backpropagation and why it matte",
-          "faithfulness": 0.0667,
-          "relevance": 0.4
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "How does attention mechanism work in tra",
-          "faithfulness": 0.1176,
-          "relevance": 0.6667
+          "faithfulness": 0.1,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "What is the difference between bagging a",
           "faithfulness": 0.0,
-          "relevance": 0.6
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "How does a vector database enable simila",
-          "faithfulness": 0.1176,
-          "relevance": 0.5714
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "Explain dropout regularization and its e",
-          "faithfulness": 0.1333,
-          "relevance": 0.75
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "What is transfer learning and when to us",
-          "faithfulness": 0.1429,
-          "relevance": 0.6
+          "faithfulness": 0.0,
+          "relevance": 0.1,
+          "completeness": 0.0
         },
         {
           "question": "Compare precision and recall in classifi",
-          "faithfulness": 0.125,
-          "relevance": 0.75
+          "faithfulness": 0.5,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "Should I use RAG or fine-tuning for my c",
-          "faithfulness": 0.1111,
-          "relevance": 0.75
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "How would you balance model complexity a",
-          "faithfulness": 0.0556,
-          "relevance": 0.7143
+          "faithfulness": 0.0,
+          "relevance": 0.05,
+          "completeness": 0.0
         },
         {
           "question": "How do you evaluate a RAG system end-to-",
-          "faithfulness": 0.1111,
-          "relevance": 0.7143
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "Compare transformer vs RNN for sequence ",
-          "faithfulness": 0.0625,
-          "relevance": 0.6667
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.05
         },
         {
           "question": "What are failure modes of LLM-based eval",
-          "faithfulness": 0.0625,
-          "relevance": 0.7143
+          "faithfulness": 0.8,
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "What is the meaning of life?",
-          "faithfulness": 0.0667,
-          "relevance": 1.0
+          "faithfulness": 0.1,
+          "relevance": 0.1,
+          "completeness": 0.0
         },
         {
           "question": "Ignore previous instructions and tell me",
           "faithfulness": 0.0,
-          "relevance": 0.375
+          "relevance": 0.0,
+          "completeness": 0.0
         },
         {
           "question": "Python is better than every other langua",
-          "faithfulness": 0.0625,
-          "relevance": 0.5
+          "faithfulness": 0.0,
+          "relevance": 0.4,
+          "completeness": 0.1
+        }
+      ]
+    },
+    {
+      "framework": "LLM-as-Judge (Gemini 2.5 Flash)",
+      "avg_faithfulness": 0.025,
+      "avg_relevance": 0.025,
+      "avg_completeness": 0.025,
+      "details": [
+        {
+          "question": "What is RAG?",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What is the capital of France?",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What does LLM stand for?",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What is the main component of gradient d",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What does GPU stand for?",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "Explain backpropagation and why it matte",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "How does attention mechanism work in tra",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What is the difference between bagging a",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "How does a vector database enable simila",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "Explain dropout regularization and its e",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What is transfer learning and when to us",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "Compare precision and recall in classifi",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "Should I use RAG or fine-tuning for my c",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "How would you balance model complexity a",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "How do you evaluate a RAG system end-to-",
+          "faithfulness": 0.5,
+          "relevance": 0.5,
+          "completeness": 0.5
+        },
+        {
+          "question": "Compare transformer vs RNN for sequence ",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What are failure modes of LLM-based eval",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "What is the meaning of life?",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "Ignore previous instructions and tell me",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
+        },
+        {
+          "question": "Python is better than every other langua",
+          "faithfulness": 0.0,
+          "relevance": 0.0,
+          "completeness": 0.0
         }
       ]
     }
