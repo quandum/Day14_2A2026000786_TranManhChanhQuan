@@ -12,6 +12,32 @@ Benchmark chạy trên 20 QA pairs (5 Easy + 7 Medium + 5 Hard + 3 Adversarial) 
 
 **Overall pass rate (heuristic):** 0.0% (0/20 pairs passed)
 
+### 📚 Ý nghĩa các chỉ số Metric
+
+**Answer-side metrics (chấm chất lượng câu trả lời):**
+
+| Metric | Ý nghĩa | Công thức / Cách đo | Range | Tốt | Xấu |
+|--------|---------|-------------------|:-----:|:---:|:---:|
+| **Faithfulness** | Mức độ trung thành với context — answer có grounded trong context không? | Word-overlap: `\|answer ∩ context\| / \|answer\|` (heuristic) hoặc LLM judge check NLI (LLM-based) | 0–1 | ≥ 0.7 | < 0.3 = hallucination |
+| **Relevance / Answer Relevancy** | Mức độ liên quan — answer có trả lời đúng câu hỏi không? | Word-overlap: `\|answer ∩ question\| / \|question\|` hoặc LLM judge đánh giá semantic | 0–1 | ≥ 0.7 | < 0.3 = irrelevant |
+| **Completeness** | Mức độ đầy đủ — answer có cover đủ expected answer không? | Word-overlap: `\|answer ∩ expected\| / \|expected\|` hoặc LLM judge so sánh | 0–1 | ≥ 0.7 | < 0.3 = incomplete |
+
+**Retrieval-side metrics (chấm chất lượng retrieval — áp dụng cho danh sách chunks):**
+
+| Metric | Ý nghĩa | Công thức | Range | Tốt | Xấu |
+|--------|---------|-----------|:-----:|:---:|:---:|
+| **Context Recall** | Retriever có lấy đủ evidence không? | `\|expected_tokens ∩ union(all chunks)\| / \|expected_tokens\|` | 0–1 | ≥ 0.7 | < 0.5 = missing evidence |
+| **Context Precision** | Chunks relevant có được xếp lên đầu không? (rank-aware) | AP@K: Average Precision qua các vị trí, thưởng relevant ở top | 0–1 | ≥ 0.7 | < 0.5 = ranking kém |
+
+**Giải thích failure types:**
+- **hallucination** (faithfulness < 0.3): Answer bịa thông tin không có trong context — nguy hiểm nhất, có thể gây misinformation
+- **irrelevant** (relevance < 0.3): Answer không giải quyết câu hỏi — thường do prompt ambiguous hoặc intent detection sai
+- **incomplete** (completeness < 0.3): Answer bỏ sót key information — thường do context window nhỏ hoặc retrieval thiếu
+- **off_topic**: Answer trả lời chủ đề khác — thường do intent detection sai hoặc system prompt không rõ ràng
+- **refusal**: Từ chối khi nên trả lời — guardrails quá chặt
+
+> **Lưu ý:** Heuristic word-overlap chỉ đo lexical similarity (từ khớp từ), không capture semantic. LLM-based evaluation (Gemini) hiểu ngữ nghĩa nên cho kết quả chính xác hơn, nhưng strict hơn đáng kể.
+
 ### 📊 Multi-Framework Comparison (v2 — real RAGAS + TruLens + LLM-as-Judge via Gemini 2.5 Flash)
 
 | Framework | Faithfulness | Relevance | Completeness | Pass Rate |
